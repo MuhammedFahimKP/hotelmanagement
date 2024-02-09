@@ -53,7 +53,7 @@ class UserSignupView(generics.GenericAPIView):
           
             return Response({
                 'data':user,
-                'message':f'hi {user['first_name']} thanks for siging up',
+                'message':f"hi {user['first_name']} thanks for siging up",
             },status=status.HTTP_201_CREATED) 
          
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST) 
