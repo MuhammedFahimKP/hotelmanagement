@@ -108,10 +108,13 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'whitenoise.middleware.WhiteNoiseMiddleware'
             ],
         },
     },
 ]
+
+
 
 WSGI_APPLICATION = 'base.wsgi.application'
 
@@ -190,8 +193,7 @@ STATICFILES_DIRS = [
     
 ]
 
-import mimetypes
-mimetypes.add_type("text/css", ".css", True)
+
 
 
 # Default primary key field type
