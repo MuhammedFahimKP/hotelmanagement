@@ -43,7 +43,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 
 AUTH_USER_MODEL ='accounts.MyUser'
@@ -88,9 +88,14 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware'
+    
     
     #3rd party middlewares
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+    
+    #custom middleware
+    'accounts.middleware.ResponseMiddlewareFor404',
+    
     
     
     
@@ -114,6 +119,14 @@ TEMPLATES = [
         },
     },
 ]
+
+# REST_FRAMEWORK = {
+#     'EXCEPTION_HANDLER': 'accounts.utils.exception_404_handler',
+#     # other DRF settings...
+# }
+
+
+
 
 
 
