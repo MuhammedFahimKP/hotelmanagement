@@ -57,7 +57,7 @@ class UserSignUpSerializer(serializers.ModelSerializer):
 class UserSignInSerializer(serializers.Serializer):
     
     email    = serializers.EmailField(max_length=100)
-    password = serializers.CharField(max_length=16)
+    password = serializers.CharField(write_only=True,max_length=16)
     access   = serializers.CharField(read_only=True)
     refresh  = serializers.CharField(read_only=True)
    
@@ -69,6 +69,8 @@ class UserSignInSerializer(serializers.Serializer):
     
     
     def validate(self,data):
+        print(data)
+        print(data['email'])
         email = data['email']
         password = data['password']
         if not email:
@@ -101,16 +103,21 @@ class UserSignInSerializer(serializers.Serializer):
             'refresh':str(user.tokens.get('refresh'))
         }
         
+        # return {
+        #     'hai':'hello'
+        # }
+        
     
     
     
     class Meta:
         fields = [
-            
+            'name',
             'email',
             'password',
             'access',
-            'refresh'
+            'refresh',
+            
         ]
         
         

@@ -67,13 +67,13 @@ class UserSignUpAPIView(generics.GenericAPIView):
 
     
     
-class UserSigninAPIView(generics.GenericAPIView):
+class UserSignInAPIView(generics.GenericAPIView):
 
     
     serializer_class = UserSignInSerializer
 
     #allow only post method
-    def post(self,requst):
+    def post(self,request):
         #passing the data to the serializer
         serialzer = self.serializer_class(data=self.request.data)
          
