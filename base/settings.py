@@ -29,7 +29,10 @@ DOT_ENV_FILE  = os.path.join(BASE_DIR,'.env')
 
 
 if os.path.isfile(DOT_ENV_FILE):
-    load_dotenv(DOT_ENV_FILE)
+    print(DOT_ENV_FILE)
+    load_dotenv()
+    
+    print(os.environ.get('HAI'))
 
 
 
@@ -143,8 +146,8 @@ DATABASES = {
     }
 }
 
-
-DATABASES['default'] = dj_database_url.parse(os.environ.get('DB_URL')) 
+# print(os.environ.get('DATA_BASE_URL'))
+DATABASES['default'] = dj_database_url.parse(os.environ.get('DATA_BASE_URL')) 
 
 
 # Password validation
