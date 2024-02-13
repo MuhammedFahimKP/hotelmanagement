@@ -22,7 +22,7 @@ class UserSignUpAPIView(generics.GenericAPIView):
     
     queryset         = MyUser.objects.all()
     serializer_class = UserSignUpSerializer
-    renderer_classes = [renderers.JSONOpenAPIRenderer]          
+    # renderer_classes = [renderers.JSONOpenAPIRenderer]          
        
 
     #post method only allow
@@ -47,18 +47,16 @@ class UserSignUpAPIView(generics.GenericAPIView):
 
             #taking the serializer data for response sending activation link
 
-            user = serializer.data
+            
             
             #calling thread class to send email
 
             # EmailThread(req=self.request,user=user).start()
             
             #returning the response with http 201
-
           
             return Response({
-                'data':user,
-                'message':f"hi {user['first_name']} thanks for siging up",
+                serializer.data
             },status=status.HTTP_201_CREATED) 
          
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST) 

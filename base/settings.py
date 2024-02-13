@@ -29,10 +29,10 @@ DOT_ENV_FILE  = os.path.join(BASE_DIR,'.env')
 
 
 if os.path.isfile(DOT_ENV_FILE):
-    print(DOT_ENV_FILE)
+    
     load_dotenv()
     
-    print(os.environ.get('HAI'))
+    
 
 
 
@@ -71,6 +71,8 @@ INSTALLED_APPS = [
     #3rd party apps
     
     'rest_framework',
+    'rest_framework_swagger',	
+    'drf_yasg',
     
     
 
@@ -118,6 +120,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 
+                
             ],
         },
     },
@@ -128,6 +131,7 @@ TEMPLATES = [
 #     # other DRF settings...
 # }
 
+REST_FRAMEWORK = { 'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema' }
 
 
 
@@ -208,6 +212,11 @@ STATIC_URL = '/static/'
 STATIC_ROOT = "static/"
 
 
+
+# STATIC_URL = '/static/'
+# STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+# VENV_PATH = os.path.dirname(BASE_DIR)
+# STATIC_ROOT = os.path.join(VENV_PATH, 'static_root')
 
 
 # Default primary key field type

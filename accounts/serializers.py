@@ -1,14 +1,16 @@
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth import get_user_model
+
 from rest_framework import serializers
 
 
+USER = get_user_model()
 
 
 class UserSignUpSerializer(serializers.ModelSerializer):
     
     
-    email            = serializers.CharField(max_length=100)
+    email            = serializers.EmailField(max_length=100)
     first_name       = serializers.CharField(max_length=50)
     last_name        = serializers.CharField(max_length=50)
     password         = serializers.CharField(min_length=8,max_length=16,write_only=True)      
@@ -17,7 +19,7 @@ class UserSignUpSerializer(serializers.ModelSerializer):
     
     def validate(self, data:dict) -> dict:
         
-        user = get_user_model().objects.filter(email=data['email']) 
+        user = USER.objects.filter(email=data['email']) 
         if user.exists():
             
             raise serializers.ValidationError({
@@ -40,7 +42,7 @@ class UserSignUpSerializer(serializers.ModelSerializer):
     
     class Meta:
         
-        model  = get_user_model()
+        model  = USER
         fields = [
             
             'email',
@@ -56,10 +58,12 @@ class UserSignUpSerializer(serializers.ModelSerializer):
 
 class UserSignInSerializer(serializers.Serializer):
     
-    email    = serializers.EmailField(max_length=100)
-    password = serializers.CharField(write_only=True,max_length=16)
-    access   = serializers.CharField(read_only=True)
-    refresh  = serializers.CharField(read_only=True)
+    email          = serializers.EmailField(max_length=100)
+    first_name     = serializers.CharField(read_only=True)
+    last_name      = serializers.CharField(read_only=True)
+    password       = serializers.CharField(write_only=True)
+    access         = serializers.CharField(read_only=True)
+    refresh        = serializers.CharField(read_only=True)
    
    
     
@@ -69,16 +73,12 @@ class UserSignInSerializer(serializers.Serializer):
     
     
     def validate(self,data):
-        print(data)
-        print(data['email'])
-        email = data['email']
+       
+        email    = data['email']
         password = data['password']
-        if not email:
-            raise serializers.ValidationError("Email is required.")
-        elif not password:
-            raise serializers.ValidationError("Password is required.")
+        
 
-        user = get_user_model().objects.filter(email__iexact=email)
+        user = USER.objects.filter(email__iexact=email)
 
         if not user.exists():
             raise serializers.ValidationError({
@@ -93,32 +93,33 @@ class UserSignInSerializer(serializers.Serializer):
             
         if user.is_active == False:
             raise serializers.ValidationError({
-                'user':'user need to register'
+                'user':'is not verfied'
             })
 
         return {
             'email':user.email,
-            'name':f"{user.first_name}  {user.last_name}",
+            'first_name':f"{user.first_name}",
+            'last_name':f'{user.last_name}',
             'access':str(user.tokens.get('access')),
             'refresh':str(user.tokens.get('refresh'))
         }
         
-        # return {
-        #     'hai':'hello'
-        # }
+        
         
     
     
     
     class Meta:
         fields = [
-            'name',
+            'firs_name',
+            'last_name',
             'email',
             'password',
             'access',
             'refresh',
             
-        ]
+        ],
+        
         
         
         
