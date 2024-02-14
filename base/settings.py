@@ -55,6 +55,9 @@ AUTH_USER_MODEL ='accounts.MyUser'
 
 ALLOWED_HOSTS = ['*']
 
+CORS_ALLOW_ALL_ORIGINS = True 
+CORS_URL_REGEX = r"^/api/.*"
+
 
 # Application definition
 
@@ -74,6 +77,7 @@ INSTALLED_APPS = [
 	
     'drf_yasg',
     
+    'corsheaders',
     
 
     #project apps
@@ -97,6 +101,7 @@ MIDDLEWARE = [
     
     #3rd party middlewares
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
     
     #custom middleware
     'accounts.middleware.ResponseMiddlewareFor404',
@@ -150,7 +155,7 @@ DATABASES = {
     }
 }
 
-# print(os.environ.get('DATA_BASE_URL'))
+
 DATABASES['default'] = dj_database_url.parse(os.environ.get('DATA_BASE_URL')) 
 
 
@@ -223,3 +228,12 @@ STATIC_ROOT = "static/"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+
+#Google Auth settings 
+
+GOOGLE_CLIENT_ID     = os.environ.get('GOOGLE_CLIENT_ID')
+GOOGLE_CLIENT_SECRET = os.environ.get('GOOGLE_CLIENT_SECRET')
+SOCIAL_AUTH_PASSWORD = os.environ.get('SOCIAL_AUTH_PASSWORD')
+

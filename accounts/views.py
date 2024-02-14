@@ -7,7 +7,8 @@ from rest_framework import generics,renderers,status
 from .serializers import (
     
     UserSignUpSerializer,
-    UserSignInSerializer
+    UserSignInSerializer,
+    UserGoogleAuthSerializer
 
 )
 from .models import MyUser
@@ -84,7 +85,28 @@ class UserSignInAPIView(generics.GenericAPIView):
     
         
         
+class UserGoogleAuthAPIView(generics.GenericAPIView):
+
     
+    serializer_class = UserGoogleAuthSerializer
+
+    #allow only post method
+    def post(self,request):
+        
+        #passing the data to the serializer
+        serialzer = self.serializer_class(data=self.request.data)
+         
+        #if serializer valid then it will send a data with http 200 
+        if serialzer.is_valid(raise_exception=True):
+            
+            return Response(serialzer.data,status=status.HTTP_200_OK)
+
+        
+        #otherwise it will send data serializer error with http 400
+        
+        print("error",serialzer.errors)
+        
+        return Response(serialzer.errors,status=status.HTTP_400_BAD_REQUEST)
     
     
             
