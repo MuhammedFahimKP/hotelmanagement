@@ -56,9 +56,8 @@ class UserSignUpAPIView(generics.GenericAPIView):
             
             #returning the response with http 201
           
-            return Response({
-                serializer.data
-            },status=status.HTTP_201_CREATED) 
+            return Response(serializer.data
+            ,status=status.HTTP_201_CREATED) 
          
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST) 
 
@@ -104,7 +103,7 @@ class UserGoogleAuthAPIView(generics.GenericAPIView):
         
         #otherwise it will send data serializer error with http 400
         
-        print("error",serialzer.errors)
+        
         
         return Response(serialzer.errors,status=status.HTTP_400_BAD_REQUEST)
     
