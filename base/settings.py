@@ -45,8 +45,9 @@ if os.path.isfile(DOT_ENV_FILE):
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 
+
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 
 AUTH_USER_MODEL ='accounts.MyUser'
@@ -55,11 +56,20 @@ AUTH_USER_MODEL ='accounts.MyUser'
 
 ALLOWED_HOSTS = ['*']
 
+
+#cores settings 
+
 CORS_ALLOW_ALL_ORIGINS = True 
 CORS_URL_REGEX = r"^/api/.*"
 
+#Api key settings
+
+API_KEY = 'hijk'
+
 
 # Application definition
+
+
 
 INSTALLED_APPS = [
     
@@ -75,6 +85,9 @@ INSTALLED_APPS = [
     
     'rest_framework',
 	
+    #for api key 
+    
+    
     'drf_yasg',
     
     'corsheaders',
@@ -103,13 +116,17 @@ MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
     "corsheaders.middleware.CorsMiddleware",
     
-    #custom middleware
-    'accounts.middleware.ResponseMiddlewareFor404',
-    
-    
-    
-    
+    #custom middleware fro handling 404
+    'middlewares.ResponseMiddlewareFor404',
+            
 ]
+
+
+
+
+
+
+
 
 ROOT_URLCONF = 'base.urls'
 
@@ -131,12 +148,11 @@ TEMPLATES = [
     },
 ]
 
-# REST_FRAMEWORK = {
-#     'EXCEPTION_HANDLER': 'accounts.utils.exception_404_handler',
-#     # other DRF settings...
-# }
 
-REST_FRAMEWORK = { 'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema' }
+
+
+
+REST_FRAMEWORK = { 'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',}
 
 
 

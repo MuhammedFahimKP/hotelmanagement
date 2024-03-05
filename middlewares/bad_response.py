@@ -1,3 +1,4 @@
+
 from django.http import JsonResponse
 
 class ResponseMiddlewareFor404:
@@ -12,3 +13,5 @@ class ResponseMiddlewareFor404:
             return JsonResponse({'detail': 'Not Found'}, status=404)
 
         return response
+    
+    

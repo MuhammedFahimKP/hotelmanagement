@@ -1,7 +1,9 @@
-from django.shortcuts import render
+
 
 from rest_framework.response import Response
-from rest_framework import generics,renderers,status
+from rest_framework import generics,status
+
+
 
 
 from .serializers import (
@@ -23,7 +25,8 @@ class UserSignUpAPIView(generics.GenericAPIView):
     
     queryset         = MyUser.objects.all()
     serializer_class = UserSignUpSerializer
-    # renderer_classes = [renderers.JSONOpenAPIRenderer]          
+    
+
        
 
     #post method only allow
