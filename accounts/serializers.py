@@ -1,3 +1,6 @@
+
+
+
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth import get_user_model
 from django.conf import settings
@@ -6,6 +9,7 @@ from django.conf import settings
 
 
 from rest_framework import serializers
+from rest_framework.exceptions import AuthenticationFailed
 
 from .utils import Google,register_social_user
 from .models import AUTH_PROVIDERS
@@ -90,29 +94,19 @@ class UserSignInSerializer(serializers.Serializer):
         user = USER.objects.filter(email__iexact=email)
 
         if not user.exists():
-            raise serializers.ValidationError({
+            raise AuthenticationFailed({
                 'email':'User not found please register'
             })
             
         user = user.first()
         if user.check_password(password) == False:
-            raise serializers.ValidationError({
+            raise AuthenticationFailed({
                 'passowrd':'incorrect password'
             })
             
-        if user.is_active == False:
-            raise serializers.ValidationError({
-                'user':'is not verfied'
-            })
-
-        return {
-            'email':user.email,
-            'first_name':f"{user.first_name}",
-            'last_name':f'{user.last_name}',
-            'access':str(user.tokens.get('access')),
-            'refresh':str(user.tokens.get('refresh'))
-        }
         
+
+        return user 
         
         
     
